@@ -31,22 +31,29 @@
 			fadeIn: 200,
 			fadeOut: 200,
 			attribute: "title",
+			classPrefix: "tiptip",
 			content: false, // HTML or String to fill TipTIp with
 		  	enter: function(){},
 		  	exit: function(){}
 	  	};
 	 	var opts = $.extend(defaults, options);
+	 	var getId = function(suffix) {
+	 		return opts.classPrefix + "_" + suffix;
+	 	};
+	 	var getSelector = function(suffix) {
+	 		return '#' + getId(suffix);
+	 	};
 
 	 	// Setup tip tip elements and render them to the DOM
-	 	if($("#tiptip_holder").length <= 0){
-	 		var tiptip_holder = $('<div id="tiptip_holder" style="max-width:'+ opts.maxWidth +';"></div>');
-			var tiptip_content = $('<div id="tiptip_content"></div>');
-			var tiptip_arrow = $('<div id="tiptip_arrow"></div>');
-			$("body").append(tiptip_holder.html(tiptip_content).prepend(tiptip_arrow.html('<div id="tiptip_arrow_inner"></div>')));
+	 	if($(getSelector('holder')).length <= 0){
+	 		var tiptip_holder = $('<div id="' + getId('holder') + '" style="max-width:'+ opts.maxWidth +';"></div>');
+			var tiptip_content = $('<div id="' + getId('content') + '"></div>');
+			var tiptip_arrow = $('<div id="' + getId('arrow') + '"></div>');
+			$("body").append(tiptip_holder.html(tiptip_content).prepend(tiptip_arrow.html('<div id="' + getId('arrow_inner') + '"></div>')));
 		} else {
-			var tiptip_holder = $("#tiptip_holder");
-			var tiptip_content = $("#tiptip_content");
-			var tiptip_arrow = $("#tiptip_arrow");
+			var tiptip_holder = $(getSelector('holder'));
+			var tiptip_content = $(getSelector('content'));
+			var tiptip_arrow = $(getSelector('arrow'));
 		}
 
 		return this.each(function(){
